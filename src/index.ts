@@ -228,16 +228,22 @@ app.get('/', async (c) => {
     const endTime = Date.now();
     const elapsedTime = endTime - startTime;
 
-    // Return the response with metadata, video list, and time taken
-    return c.json({
+    // Pretty print the JSON response
+    const jsonResponse = {
       status: '200 OK',
       totalVideos: videosWithStats.length,
       elapsedTime, // Include elapsed time in milliseconds
       videos: videosWithStats
+    };
+
+    // Return pretty-printed JSON response
+    return c.text(JSON.stringify(jsonResponse, null, 2), 200, {
+      'Content-Type': 'application/json'
     });
   } else {
     return c.text("No videos found in the playlist.");
   }
 });
+
 
 export default app;
